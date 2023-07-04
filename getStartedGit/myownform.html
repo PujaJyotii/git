@@ -24,15 +24,28 @@
             <input class="button" type="submit" value="submit">
         </form>
     </section>
-    <script>
-  function storeToLocalStorage(event)
-  {
-    event.preventDefault();
-    const name=event.target.name.value
-    const email=event.target.email.value
-    localStorage.setItem('name',name)
-    localStorage.setItem('email',email)
-  }
+    <ul id="list-of-items"></ul>
+    <script >
+        function storeToLocalStorage(event)
+        {
+            event.preventDefault();
+            const name=event.target.name.value
+            const email=event.target.email.value 
+
+            const obj={
+                name,
+                email
+            }
+            localStorage.setItem(obj.email,JSON.stringify(obj))
+            showUserOnScreen(obj)
+        }
+
+        function showUserOnScreen(obj)
+        {
+            const parentEle=document.parentElement("list_of-items")
+            parentEle.innerHTML=parentEle.innerHTML+'<li>${obj.name}+${obj.email}</li>'
+        }
+ 
     </script>
 </body>
 </html>
