@@ -15,8 +15,7 @@
                 <label for="name">Name:</label>
                 <br>
                 <input type="text" id="name" required><br>
-            </div>
-            <div>
+            
                 <label for="email">Email:</label>
                 <br>
                 <input type="text" id="email" required><br>
@@ -24,7 +23,7 @@
             <input class="button" type="submit" value="submit">
         </form>
     </section>
-    <ul id="list-of-items"></ul>
+    <ul id="listofitems"></ul>
     <script >
         function storeToLocalStorage(event)
         {
@@ -42,9 +41,23 @@
 
         function showUserOnScreen(obj)
         {
-            const parentEle=document.parentElement("list_of-items")
-            parentEle.innerHTML=parentEle.innerHTML+'<li>${obj.name}+${obj.email}</li>'
+            const parentEle=document.parentElement("listofitems")
+            const childEle=document.createElement('li')
+            childEle.textContent=obj.name+'-'+obj.email;
+
+            const deleteButton=document.createElement('input');
+            deleteButton.type='button'
+            deleteButton.value='Delete'
+
+            deleteButton.onClick=() =>{
+                localStorage.removeItem(obj.email)
+                localStorage.removeItem(childEle)
+            }
+            childEle.appendChild(deleteButton)
+            parentEle.appendChild(childEle)
         }
+
+    
  
     </script>
 </body>
