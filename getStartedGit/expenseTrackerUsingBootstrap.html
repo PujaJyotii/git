@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body{
+                text-align: center;
+                
+            }
+            input
+            {
+                width: 250px;
+                height: 20px;
+                font-size: medium;
+                
+            }
+            select
+            {
+                width: 200px;
+                height: 20px;
+            }
+            button
+            {
+                background-color: palevioletred;
+                width: 150px;
+                height: 30px;
+            }
+            ul {
+                 list-style: none;
+                 }
+            ul li {
+        padding: 5px;
+       background: #f4f4f4;
+        margin: 5px 0;
+  }
+            
+        </style>
+
+    </head>
+    <body>
+        
+        <div class="container">
+        <h1>Expense Tracker App with Local Storage</h1><hr>
+    </div>
+    <div class="container">
+        <div id="main" class="card card-body">
+            <form onsubmit="onSubmit(event)">
+                <label>Choose expense:</label><br>
+                <input type="number" id="ChooseExpenseTag" name="expense" required/><br><br>
+                <label>Choose description:</label><br>
+                <input type="text" id="ChooseDescriptionTag" name="description" required/><br><br>
+                <label>Choose a category:</label><br>
+                <select  id="ChooseACategoryTag">
+                    <option name="category" value="transportFare">Transport fare</option>
+                    <option name="category" value="roomRent">Room rent</option>
+                    <option name="category" value="electricityBill">Electricity Bill</option>
+                    <option name="category" value="WaterBill">Water Bill</option>
+                    <option name="category" value="shopping" >Shopping Bill</option>
+                    <option name="category" value="foodAllowance">Food Allowance</option>
+                    <option name="category" value="Wifi">Wifi</option>
+                </select><br><br>
+                <button>Add Expense</button>
+            </form>
+            <ul id="trakerOutput"></ul>
+        </div>
+    </div>
+    <script>
+        function onSubmit(event)
+        {
+            event.preventDefault();
+            const expense=event.target.expense.value;
+            const description=event.target.description.value;
+            const category= document.getElementById("ChooseACategoryTag").value;
+
+            const obj={
+                expense,
+                description,
+                category
+            }
+            localStorage.setItem(obj.description,JSON.stringify(obj))
+            showOnScreen(obj)
+        }
+        function showOnScreen(obj)
+        {
+            const childEle=document.createElement('li')
+            const parentEle=document.getElementById('trakerOutput')
+            childEle.textContent=obj.expense+' - '+obj.description+' - '+ obj.category+ ' '
+           
+
+            const deleteButton = document.createElement('button')
+            deleteButton.appendChild(document.createTextNode('Delete Expense'))
+
+           deleteButton.onclick = () =>{
+            localStorage.removeItem(obj.description)
+            parentEle.removeChild(childEle)
+           }
+            
+
+            const editButton = document.createElement('button')
+            editButton.appendChild(document.createTextNode('Edit Expense'))
+            editButton.onclick = () =>{
+            localStorage.removeItem(obj.description)
+            parentEle.removeChild(childEle)
+
+            document.getElementById('ChooseExpenseTag').value = obj.expense
+            document.getElementById('ChooseDescriptionTag').value = obj.description
+            document.getElementById('ChooseACategoryTag').value = obj.category
+
+           }
+           childEle.appendChild(deleteButton)
+           childEle.appendChild(editButton)
+            parentEle.appendChild(childEle)
+        
+        }
+    </script>
+
+
+    </body>
+</html>
