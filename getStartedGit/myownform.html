@@ -57,17 +57,28 @@
 
         function showUserOnScreen(obj)
         {
-            const parentEle=document.getElementById("listofitems")
+           const parentEle=document.getElementById("listofitems")
             const childEle=document.createElement('li')
-            childEle.textContent=obj.name +'-'+ obj.email;
+            childEle.textContent=obj.name+ '-' + obj.email;
+        
 
             const deleteButton=document.createElement('input')
             deleteButton.type="button"
             deleteButton.value="Delete"
-            deleteButton.onclick = () => {
+            deleteButton.onclick = (objId) => {
+                axios.delete("https://crudcrud.com/api/9173c45a85d444a8bff5be48ae2a860b/AppointmentData/${objId}")
                 localStorage.removeItem(obj.email)
                 parentEle.removeChild(childEle)
 
+            }
+            function removeUserFromScreen(objId)
+            {
+                const parentNode=document.getElementById('listofitems');
+                const chilNodetobeDeleted = document.getElementById(objId)
+                if(chilNodetobeDeleted)
+                {
+                    parentNode.removeChild(chilNodetobeDeleted)
+                }
             }
             
             const editButton=document.createElement('button')
