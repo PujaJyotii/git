@@ -40,6 +40,20 @@
                 console.log(error)
             })
         }
+        window.addEventListener("DOMContentLoaded",() => {
+            const data = axios.get("https://crudcrud.com/api/9173c45a85d444a8bff5be48ae2a860b/AppointmentData").then((response) => {
+                console.log(response) 
+
+            
+            for (var i=0;i<response.data.length;i++)
+            {
+                showUserOnScreen(response.data[i])
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
+        console.log(data)
+        })
 
         function showUserOnScreen(obj)
         {
